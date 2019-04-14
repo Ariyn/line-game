@@ -1,7 +1,7 @@
 var currentPosition = 0;
 var index = 0;
 let offsetX = 22
-let offsetY = -70;
+let offsetY = 0;
 var size = [65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65];
 
 function initSprite() {
