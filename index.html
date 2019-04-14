@@ -1,0 +1,52 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="js/customSprite.js"></script>
+
+<script>
+    let resourcePrefix = "resources/"
+    let spritePath = resourcePrefix+"metal slug idle.png";
+
+    window.onload = function() {
+        // var $example = $('#sprite .example');
+        // var frame = $example.find('.frame')[0];
+        // var motio = new Motio(frame, {
+        //     fps: 5,
+        //     frames: 17
+        // });
+				//
+        // // Play when mouse enters the frame, and pause when it leaves
+        // $example.on('mouseenter mouseleave', function (event) {
+        //     motio[event.type === 'mouseenter' ? 'play' : 'pause']();
+        // });
+				initSprite()
+				$(document).keydown(function(event) {
+					if(event.key == "ArrowRight")
+						animateNext()
+					else if(event.key == "ArrowLeft")
+						animateBefore()
+				})
+    }
+</script>
+
+<style>
+.example {
+    height: 300px;
+    margin-bottom: 25px;
+    background: #363840;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+}
+
+.example .frame {
+    position: relative;
+    left: 50%;
+    top: 25px;
+    margin-left: -12px;
+    width: 63px;
+    height: 74px;
+    background: url("resources/metal slug sprite.png");
+}
+</style>
+
+<div id="sprite"><div class="example"><div class="frame" ></div></div></div>
