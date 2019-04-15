@@ -22,11 +22,15 @@
         // });
 				var sample = sprite($(".frame"), {"x":22, "y":-5},[65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65])
 
+				var sample2 = sprite($(".frame2"), {"x":20, "y":-74},[65, 65, 64, 69, 69, 72, 72, 72, 72, 73, 73, 74, 67, 62, 64])
+
 				$(document).keydown(function(event) {
 					if(event.key == "ArrowRight") {
 						sample.animateNext()
+						sample2.animateNext()
 					} else if(event.key == "ArrowLeft") {
 						sample.animateBefore()
+						sample2.animateBefore()
 					}
 				})
     }
@@ -49,6 +53,13 @@
     height: 66px;
     background: url("resources/metal slug sprite.png");
 }
+.example .frame2 {
+    position: absolute;
+    left: 44%;
+    top: 25px;
+    margin-left: -12px;
+    width: 63px;
+    height: 66px;
     background: url("resources/metal slug sprite.png");
 }
 </style>
