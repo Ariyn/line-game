@@ -20,12 +20,14 @@
         // $example.on('mouseenter mouseleave', function (event) {
         //     motio[event.type === 'mouseenter' ? 'play' : 'pause']();
         // });
-				initSprite()
+				var sample = sprite($(".frame"), {"x":22, "y":-5},[65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65])
+
 				$(document).keydown(function(event) {
-					if(event.key == "ArrowRight")
-						animateNext()
-					else if(event.key == "ArrowLeft")
-						animateBefore()
+					if(event.key == "ArrowRight") {
+						sample.animateNext()
+					} else if(event.key == "ArrowLeft") {
+						sample.animateBefore()
+					}
 				})
     }
 </script>
@@ -39,14 +41,16 @@
 }
 
 .example .frame {
-    position: relative;
+    position: absolute;
     left: 50%;
     top: 25px;
     margin-left: -12px;
     width: 63px;
-    height: 74px;
+    height: 66px;
+    background: url("resources/metal slug sprite.png");
+}
     background: url("resources/metal slug sprite.png");
 }
 </style>
 
-<div id="sprite"><div class="example"><div class="frame" ></div></div></div>
+<div id="sprite"><div class="example"><div class="frame"></div><div class="frame2"></div></div></div>

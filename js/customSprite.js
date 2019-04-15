@@ -1,37 +1,33 @@
-var currentPosition = 0;
-var index = 0;
-let offsetX = 22
-let offsetY = 0;
-var size = [65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65];
+var sprite = function(target, offset, window) {
+	let currentPosition = 0;
+	let index = 0;
+	let offsetX = offset.x;
+	let offsetY = offset.y;
 
-function initSprite() {
-	currentPosition = -offsetX
-	$(".frame").css("background-position-x", currentPosition);
-	$(".frame").css("background-position-y", offsetY);
-}
-function animateScript() {
-	console.log(currentPosition, index, size[index])
-	currentPosition -= size[index];
-	if(index + 1)
-	$(".frame").css("background-position", currentPosition)
-}
+	currentPosition -= offsetX
+	target.css("background-position-x", currentPosition);
+	target.css("background-position-y", offsetY);
 
-function animateNext() {
-	console.log(currentPosition, index-1, size[index-1])
-	currentPosition -= size[index];
-	$(".frame").css("background-position-x", currentPosition)
-	if(size.length <= index + 1) {
-		currentPosition = -offsetX
-		index = 0
-	} else {
-		index += 1
+	function animateNext() {
+		currentPosition -= window[index];
+		target.css("background-position-x", currentPosition)
+		if(window.length <= index + 1) {
+			currentPosition = -offsetX
+			index = 0
+		} else {
+			index += 1
+		}
 	}
-}
 
-function animateBefore() {
-	if(index <= 0)
-		return false;
-	console.log(currentPosition, index-1, size[index-1])
-	currentPosition += size[--index];
-	$(".frame").css("background-position", currentPosition)
+	function animateBefore() {
+		if(index <= 0)
+			return false;
+		currentPosition += window[--index];
+		target.css("background-position-x", currentPosition)
+	}
+
+	return {
+		"animateNext": animateNext,
+		"animateBefore": animateBefore
+	}
 }
