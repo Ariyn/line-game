@@ -3,14 +3,13 @@ var sprite = function(target, offset, window) {
 	let index = 0;
 	let offsetX = offset.x;
 	let offsetY = offset.y;
+	let intervalId = null;
 
 	currentPosition -= offsetX
 	target.css("background-position-x", currentPosition);
 	target.css("background-position-y", offsetY);
 
 	function animateNext() {
-		if(target[0].className == "frame2")
-			console.log(target[0].className, currentPosition, index-1, window[index-1])
 		currentPosition -= window[index];
 		target.css("background-position-x", currentPosition)
 		if(window.length <= index + 1) {
@@ -28,8 +27,22 @@ var sprite = function(target, offset, window) {
 		target.css("background-position-x", currentPosition)
 	}
 
+	function run() {
+		if(intervalId == null) {
+			intervalId = setInterval(animateNext, 1000/fps);
+		}
+	}
+	function stop() {
+		if(intervalId) {
+			clearInterval(intervalId);
+			intervalId = null;
+		}
+	}
+
 	return {
 		"animateNext": animateNext,
-		"animateBefore": animateBefore
+		"animateBefore": animateBefore,
+		"run": run,
+		"stop": stop
 	}
 }

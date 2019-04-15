@@ -8,30 +8,25 @@
     let resourcePrefix = "resources/"
     let spritePath = resourcePrefix+"metal slug idle.png";
 
+		let spriteObjects = {};
     window.onload = function() {
-        // var $example = $('#sprite .example');
-        // var frame = $example.find('.frame')[0];
-        // var motio = new Motio(frame, {
-        //     fps: 5,
-        //     frames: 17
-        // });
-				//
-        // // Play when mouse enters the frame, and pause when it leaves
-        // $example.on('mouseenter mouseleave', function (event) {
-        //     motio[event.type === 'mouseenter' ? 'play' : 'pause']();
-        // });
 				var sample = sprite($(".frame"), {"x":22, "y":-5},[65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65])
 
 				var sample2 = sprite($(".frame2"), {"x":20, "y":-74},[65, 65, 64, 69, 69, 72, 72, 72, 72, 73, 73, 74, 67, 62, 64])
 
-				$(document).keydown(function(event) {
-					if(event.key == "ArrowRight") {
-						sample.animateNext()
-						sample2.animateNext()
-					} else if(event.key == "ArrowLeft") {
-						sample.animateBefore()
-						sample2.animateBefore()
-					}
+				sample.run(fps=10)
+				sample2.run(fps=13)
+
+				spriteObjects["idleRobot"] = sample;
+				spriteObjects["walkingRobot"] = sample2;
+
+				$(".run").click(function() {
+					let target = $(this).attr("data-target")
+					spriteObjects[target].run()
+				})
+				$(".stop").click(function() {
+					let target = $(this).attr("data-target")
+					spriteObjects[target].stop()
 				})
     }
 </script>
@@ -65,3 +60,11 @@
 </style>
 
 <div id="sprite"><div class="example"><div class="frame"></div><div class="frame2"></div></div></div>
+
+<span>idle</span>
+<button class="run" data-target="idleRobot">run</button>
+<button class="stop" data-target="idleRobot">stop</button>
+
+<span>walking</span>
+<button class="run" data-target="walkingRobot">run</button>
+<button class="stop" data-target="walkingRobot">stop</button>
