@@ -3,31 +3,35 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 <script src="js/customSprite.js"></script>
+<script src="js/engine.js"></script>
 
 <script>
     let resourcePrefix = "resources/"
     let spritePath = resourcePrefix+"metal slug idle.png";
+		let fps = 30;
 
 		let spriteObjects = {};
     window.onload = function() {
-				var sample = sprite($(".frame"), {"x":22, "y":-5},[65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65])
 
-				var sample2 = sprite($(".frame2"), {"x":20, "y":-74},[65, 65, 64, 69, 69, 72, 72, 72, 72, 73, 73, 74, 67, 62, 64])
+			let Engine = new engine();
 
-				sample.run(fps=10)
-				sample2.run(fps=13)
+			let sample = sprite($(".frame"), {"x":22, "y":-5},[65, 65, 64, 63, 62, 61, 61, 61, 61, 61, 61, 61, 61, 62, 64, 65])
+			let Character = new character(sample);
 
-				spriteObjects["idleRobot"] = sample;
-				spriteObjects["walkingRobot"] = sample2;
+			let sample2 = sprite($(".frame2"), {"x":20, "y":-74},[65, 65, 64, 69, 69, 72, 72, 72, 72, 73, 73, 74, 67, 62, 64])
+			let Character2 = new character(sample2);
+			Character2.setSpeed(10, 0);
 
-				$(".run").click(function() {
-					let target = $(this).attr("data-target")
-					spriteObjects[target].run()
-				})
-				$(".stop").click(function() {
-					let target = $(this).attr("data-target")
-					spriteObjects[target].stop()
-				})
+			Engine.addCharacter(Character)
+			Engine.addCharacter(Character2)
+
+			Engine.init(fps)
+			$(".run").click(function() {
+				Engine.run()
+			})
+			$(".stop").click(function() {
+				Engine.stop()
+			})
     }
 </script>
 
@@ -61,10 +65,5 @@
 
 <div id="sprite"><div class="example"><div class="frame"></div><div class="frame2"></div></div></div>
 
-<span>idle</span>
 <button class="run" data-target="idleRobot">run</button>
 <button class="stop" data-target="idleRobot">stop</button>
-
-<span>walking</span>
-<button class="run" data-target="walkingRobot">run</button>
-<button class="stop" data-target="walkingRobot">stop</button>
