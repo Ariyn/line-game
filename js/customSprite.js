@@ -5,10 +5,11 @@ var sprite = function(target, offset, window) {
 	let offsetY = offset.y;
 	let intervalId = null;
 	let fps;
+	let element = target;
 
 	currentPosition -= offsetX
-	target.css("background-position-x", currentPosition);
-	target.css("background-position-y", offsetY);
+	element.css("background-position-x", currentPosition);
+	element.css("background-position-y", offsetY);
 
 	function init(_fps) {
 		fps = _fps;
@@ -16,7 +17,7 @@ var sprite = function(target, offset, window) {
 
 	function animateNext() {
 		currentPosition -= window[index];
-		target.css("background-position-x", currentPosition)
+		element.css("background-position-x", currentPosition)
 		if(window.length <= index + 1) {
 			currentPosition = -offsetX
 			index = 0
@@ -29,25 +30,49 @@ var sprite = function(target, offset, window) {
 		if(index <= 0)
 			return false;
 		currentPosition += window[--index];
-		target.css("background-position-x", currentPosition)
+		element.css("background-position-x", currentPosition)
+	}
+
+	function setElementLocation(x, y) {
+		element.css("left", x);
+		element.css("top", y);
 	}
 
 	return {
 		"animateNext": animateNext,
 		"animateBefore": animateBefore,
-		"init": init
+		"init": init,
+		"setElementLocation": setElementLocation
 	}
 }
 
-var character = function(_sprite) {
-	let x = 0,
-		  y = 0;
+var Character = function(_sprite) {
+	let speed = [0, 0],
+			location = [0, 0];
 
 	let sprite = _sprite;
 
-	function setSpeed(_x, _y) {
-		x = _x;
-		y = _y;
+	function setSpeed(x, y) {
+		speed[0] = x;
+		speed[1] = y;
+	}
+
+	function setLocation(x, y) {
+		location[0] = x;
+		location[1] = y;
+	}
+
+	function getLocation() {
+		return location
+	}
+
+	function setElementLocation(x, y) {
+		sprite.setElementLocation(x, y);
+	}
+
+	function move() {
+		location[0] += speed[0]
+		location[1] += speed[1]
 	}
 
 	function init(_fps) {
@@ -59,6 +84,10 @@ var character = function(_sprite) {
 		"setSpeed": setSpeed,
 		"init": init,
 		"animateNext": sprite.animateNext,
-		"animateBefore": sprite.animateBefore
+		"animateBefore": sprite.animateBefore,
+		"setLocation": setLocation,
+		"getLocation": getLocation,
+		"setElementLocation": setElementLocation,
+		"move": move
 	}
 }
